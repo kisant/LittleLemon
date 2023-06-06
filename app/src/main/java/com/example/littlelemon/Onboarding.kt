@@ -15,7 +15,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.littlelemon.ui.theme.DarkGreen
+import com.example.littlelemon.ui.theme.light_primary
 
 @Composable
 fun Onboarding() {
@@ -29,11 +29,11 @@ fun Onboarding() {
             contentDescription = "Logo",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .height(100.dp)
+                .height(90.dp)
                 .padding(52.dp, 27.dp, 52.dp, 27.dp)
         )
         Surface(
-            color = DarkGreen,
+            color = light_primary,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(100.dp)
@@ -44,9 +44,12 @@ fun Onboarding() {
                 modifier = Modifier.wrapContentSize()
             )
         }
-        Text(text = "Personal information", modifier = Modifier
-            .align(Alignment.Start)
-            .padding(16.dp, 32.dp, 16.dp, 0.dp))
+        Text(
+            text = "Personal information",
+            modifier = Modifier
+                .align(Alignment.Start)
+                .padding(16.dp, 32.dp, 16.dp, 0.dp)
+        )
         Column(modifier = Modifier.padding(16.dp, 32.dp, 16.dp, 32.dp)) {
             OutlinedTextField(
                 value = firstName,
@@ -80,10 +83,4 @@ fun Onboarding() {
             Text(text = "Register")
         }
     }
-}
-
-@Preview
-@Composable
-fun PreviewOnboarding() {
-    Onboarding()
 }
