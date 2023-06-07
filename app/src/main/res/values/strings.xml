@@ -3,9 +3,10 @@
     <string name="registration_error">Registration unsuccessful. Please enter all data.</string>
     <string name="registration_success">Registration successful!</string>
     <string name="onboarding_title">Let\'s get to know you</string>
-    <string name="onboarding_info">Personal information</string>
-    <string name="onboarding_name">First name</string>
-    <string name="onboarding_last_name">Last name</string>
-    <string name="onboarding_email">Email</string>
-    <string name="onboarding_register">Register</string>
+    <string name="info">Personal information</string>
+    <string name="user_name">First name</string>
+    <string name="user_last_name">Last name</string>
+    <string name="user_email">Email</string>
+    <string name="register">Register</string>
+    <string name="log_out">Log out</string>
 </resources>
