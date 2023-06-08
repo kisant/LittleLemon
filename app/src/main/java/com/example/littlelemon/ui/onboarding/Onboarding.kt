@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.example.littlelemon.ui.onboarding
 
 import android.content.Context
 import android.widget.Toast
@@ -25,11 +25,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.getString
 import androidx.navigation.NavHostController
-import com.example.littlelemon.Constants.PREFS_USER_DATA
-import com.example.littlelemon.Constants.USER_EMAIL_KEY
-import com.example.littlelemon.Constants.USER_LAST_NAME_KEY
-import com.example.littlelemon.Constants.USER_NAME_KEY
+import com.example.littlelemon.R
+import com.example.littlelemon.ui.components.TopAppBar
+import com.example.littlelemon.ui.navigation.Home
 import com.example.littlelemon.ui.theme.light_primary
+import com.example.littlelemon.util.Constants.PREFS_USER_DATA
+import com.example.littlelemon.util.Constants.USER_EMAIL_KEY
+import com.example.littlelemon.util.Constants.USER_LAST_NAME_KEY
+import com.example.littlelemon.util.Constants.USER_NAME_KEY
 
 @Composable
 fun Onboarding(navController: NavHostController) {
@@ -113,7 +116,7 @@ fun Onboarding(navController: NavHostController) {
                     )
                         .show()
                     navController.navigate(Home.route) {
-                        popUpTo(Onboarding.route) { inclusive = true }
+                        popUpTo(com.example.littlelemon.ui.navigation.Onboarding.route) { inclusive = true }
                     }
                 }
             }

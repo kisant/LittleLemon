@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.example.littlelemon.ui.navigation
 
 import android.content.Context.MODE_PRIVATE
 import androidx.compose.runtime.Composable
@@ -6,8 +6,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.littlelemon.Constants.PREFS_USER_DATA
-import com.example.littlelemon.Constants.USER_NAME_KEY
+import com.example.littlelemon.util.Constants.PREFS_USER_DATA
+import com.example.littlelemon.util.Constants.USER_NAME_KEY
+import com.example.littlelemon.ui.home.Home
+import com.example.littlelemon.ui.onboarding.Onboarding
+import com.example.littlelemon.ui.profile.Profile
 
 @Composable
 fun Navigation(navController: NavHostController) {

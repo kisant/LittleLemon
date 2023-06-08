@@ -1,4 +1,4 @@
-package com.example.littlelemon
+package com.example.littlelemon.ui.profile
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -16,10 +16,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.example.littlelemon.Constants.PREFS_USER_DATA
-import com.example.littlelemon.Constants.USER_EMAIL_KEY
-import com.example.littlelemon.Constants.USER_LAST_NAME_KEY
-import com.example.littlelemon.Constants.USER_NAME_KEY
+import com.example.littlelemon.R
+import com.example.littlelemon.ui.components.TopAppBar
+import com.example.littlelemon.ui.navigation.Onboarding
+import com.example.littlelemon.util.Constants.PREFS_USER_DATA
+import com.example.littlelemon.util.Constants.USER_EMAIL_KEY
+import com.example.littlelemon.util.Constants.USER_LAST_NAME_KEY
+import com.example.littlelemon.util.Constants.USER_NAME_KEY
 
 @Composable
 fun Profile(navController: NavHostController) {
@@ -75,7 +78,7 @@ fun Profile(navController: NavHostController) {
             onClick = {
                 prefs.edit().clear().apply()
                 navController.navigate(Onboarding.route) {
-                    popUpTo(Profile.route) { inclusive = true }
+                    popUpTo(com.example.littlelemon.ui.navigation.Profile.route) { inclusive = true }
                 }
             },
             modifier = Modifier
