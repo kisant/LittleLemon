@@ -8,11 +8,11 @@ import androidx.room.Query
 @Dao
 interface MenuDao {
     @Query("SELECT * FROM menu_table")
-    suspend fun getMenuItems(): LiveData<List<MenuEntity>>
+    fun getMenuItems(): LiveData<List<MenuEntity>>
 
     @Insert
-    suspend fun addMenuItems(vararg menuItems: MenuEntity)
+    fun addMenuItems(vararg menuItems: MenuEntity)
 
     @Query("SELECT (SELECT COUNT(*) FROM menu_table) == 0")
-    suspend fun isEmpty(): Boolean
+    fun isEmpty(): Boolean
 }

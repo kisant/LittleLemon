@@ -1,10 +1,24 @@
 package com.example.littlelemon.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import androidx.room.Room
@@ -26,6 +40,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    private val httpClient = HttpClient(Android) {
+        install(ContentNegotiation) {
+            json(contentType = ContentType("text", "plain"))
+        }
+    }
     private val database by lazy {
         Room.databaseBuilder(
             applicationContext,
@@ -34,36 +53,64 @@ class MainActivity : ComponentActivity() {
         )
             .build()
     }
-    private val httpClient = HttpClient(Android) {
-        install(ContentNegotiation) {
-            json(contentType = ContentType("text", "plain"))
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             LittleLemonTheme {
+                val cachedMenuItems by database.menuDao().getMenuItems().observeAsState(emptyList())
                 val navController = rememberNavController()
                 Navigation(navController = navController)
+                MenuItemList(items = cachedMenuItems)
             }
         }
-
         lifecycleScope.launch(Dispatchers.IO) {
-            val response = fetchMenu()
-            cacheMenuData(response)
+            if (database.menuDao().isEmpty()) {
+                val response = fetchMenu()
+                cacheMenuData(response)
+            }
         }
     }
 
     private suspend fun fetchMenu(): List<MenuItemNetwork> {
-        return httpClient.get(MENU_DATA_URI).body<MenuNetwork>().menu
+        return httpClient
+            .get("https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/littleLemonSimpleMenu.json")
+            .body<MenuNetwork>()
+            .menu
     }
 
-    private suspend fun cacheMenuData(menuItems: List<MenuItemNetwork>) {
-        if (!database.menuDao().isEmpty()) {
+    private fun cacheMenuData(menuItems: List<MenuItemNetwork>) {
+        if (database.menuDao().isEmpty()) {
             val menuEntityItems = menuItems.map { it.toMenuItemEntity() }
             database.menuDao().addMenuItems(*menuEntityItems.toTypedArray())
         }
+    }
+}
+
+@Composable
+fun MenuItemList(items: List<MenuEntity>) {
+    Log.d("--->", "${items.size}")
+    LazyColumn(modifier = Modifier
+        .fillMaxHeight()
+        .padding(top = 20.dp)) {
+        items(
+            items = items,
+            itemContent = {menuItem ->
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(menuItem.title)
+                    Text(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(5.dp),
+                        textAlign = TextAlign.Right,
+                        text = "%.2f".format(menuItem.price)
+                    )
+                }
+            }
+        )
     }
 }
 
