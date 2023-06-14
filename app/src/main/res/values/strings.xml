@@ -9,4 +9,8 @@
     <string name="user_email">Email</string>
     <string name="register">Register</string>
     <string name="log_out">Log out</string>
+    <string name="hero_title">LittleLemon</string>
+    <string name="hero_city">Chicago</string>
+    <string name="hero_description">We are a family-owned Mediterranean restaurant, focused on traditional recipes served with a modern twist</string>
+    <string name="hero_search_placeholder">Enter search phrase</string>
 </resources>
